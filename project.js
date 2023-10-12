@@ -28,15 +28,17 @@ const packamImg = new Image();
 packamImg.src = "packman2.png";
 
 // class ghost{
-//   ghostImg = new Image();
-//   x;
-//   y;
+//   constuctor(){
+//     this.ghostImg = new Image();
+//     this.x;
+//     this.y;
+//   }
 // }
 
-// ghost1 = new ghost()
-// ghost1.ghostImg.src = "ghost4.png"
-// ghost1.x =  7 + 4*box
-// ghost1.x =  7 + 7*box
+// ghost2 = new ghost()
+// ghost2.ghostImg.src = "ghost4.png"
+// ghost2.x =  7 + 6*box
+// ghost2.x =  7 + 7*box
 
 function inRad(x){
   return Math.PI * x/180
@@ -46,13 +48,28 @@ const ghostImg = new Image();
 ghostImg.src="ghost4.png"
 
 let ghost1 = {
-x:7 + 8*box,
-y:7 + 8*box
+  x:7 + 1*box,
+  y:7 + 1*box
+}
+
+let ghost2 = {
+  x:7 + 10*box,
+  y:7 + 1*box
+}
+
+let ghost3 = {
+  x:7 + 1*box,
+  y:7 + 9*box
+}
+
+let ghost4 = {
+  x:7 + 10*box,
+  y:7 + 9*box
 }
 
 let packman = {
-x:7 + 6*box,
-y:7 + 5*box
+  x:7 + 6*box,
+  y:7 + 5*box
 };
 
 document.addEventListener("keydown",direction);
@@ -74,6 +91,9 @@ function direction(event) {
 function drawGame() {
   ctx.drawImage(ground,0,0);
   ctx.drawImage(ghostImg,ghost1.x,ghost1.y);
+  ctx.drawImage(ghostImg,ghost2.x,ghost2.y);
+  ctx.drawImage(ghostImg,ghost3.x,ghost3.y);
+  ctx.drawImage(ghostImg,ghost4.x,ghost4.y);
   ctx.drawImage(packamImg,packman.x,packman.y);
 
   let pacmanX = packman.x;
@@ -95,9 +115,50 @@ function drawGame() {
   packman.x = newPacman.x;
   packman.y = newPacman.y;
   
+  if (packman.x < 0) 
+  {
+    while(packman.x < 0 && dir == "left")
+    {
+      packman.x = 7.5;
+    }
+  }
+
+  if (packman.x > 530) 
+  {
+    while(packman.x > 530 && dir == "right")
+    {
+      packman.x = 492;
+    }
+  }
+
+  if (packman.x > 530) 
+  {
+    while(packman.x > 530 && dir == "right")
+    {
+      packman.x = 492;
+    }
+  }
+
+  if (packman.y > 487) 
+  {
+    while(packman.y > 487 && dir == "down")
+    {
+      packman.y = 447;
+    }
+  }
+
+  if (packman.y < 0) 
+  {
+    while(packman.y < 0 && dir == "up")
+    {
+      packman.y = 7;
+    }
+  }
+
+  
 }
 
-let game = setInterval(drawGame, 100);
+let game = setInterval(drawGame, 120);
 
 
 
