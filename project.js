@@ -48,23 +48,23 @@ const ghostImg = new Image();
 ghostImg.src="ghost4.png"
 
 let ghost1 = {
-  x:7 + 1*box,
-  y:7 + 1*box
+  x:7 + 5*box,
+  y:7 + 3*box
 }
 
 let ghost2 = {
-  x:7 + 10*box,
-  y:7 + 1*box
+  x:7 + 6*box,
+  y:7 + 3*box
 }
 
 let ghost3 = {
-  x:7 + 1*box,
-  y:7 + 9*box
+  x:7 + 5*box,
+  y:7 + 4*box
 }
 
 let ghost4 = {
-  x:7 + 10*box,
-  y:7 + 9*box
+  x:7 + 6*box,
+  y:7 + 4*box
 }
 
 let packman = {
@@ -89,13 +89,26 @@ function direction(event) {
 // ctx.rotate(inRad(20))
 
 function drawGame() {
+ 
   ctx.drawImage(ground,0,0);
+   ctx.fillStyle="#1E90FF"
+  ctx.fillRect(1+0*box,2+2*box,2*box,box)
+  ctx.fillRect(1+3*box,2+0*box,box,3*box)
+  ctx.fillRect(1+10*box,2+2*box,2*box,box)
+  ctx.fillRect(1+8*box,2+0*box,box,3*box)
+  ctx.fillRect(1+0*box,2+5*box,3*box,box)
+  ctx.fillRect(1+3*box,2+5*box,box,3*box)
+  ctx.fillRect(1+9*box,2+5*box,3*box,box)
+  ctx.fillRect(1+8*box,2+5*box,box,3*box)
+  ctx.fillRect(1+5*box,2+3*box,2*box,2*box)
+  ctx.fillRect(1+0*box,2+9*box,4*box,box)
+  ctx.fillRect(1+8*box,2+9*box,4*box,box)
   ctx.drawImage(ghostImg,ghost1.x,ghost1.y);
   ctx.drawImage(ghostImg,ghost2.x,ghost2.y);
   ctx.drawImage(ghostImg,ghost3.x,ghost3.y);
   ctx.drawImage(ghostImg,ghost4.x,ghost4.y);
   ctx.drawImage(packamImg,packman.x,packman.y);
-
+  
   let pacmanX = packman.x;
   let pacmanY = packman.y;
 
@@ -115,25 +128,41 @@ function drawGame() {
   packman.x = newPacman.x;
   packman.y = newPacman.y;
   
-  if (packman.x < 0) 
+  if (packman.x < 4*box && packman.y<10*box && packman.y>9*box) 
   {
-    while(packman.x < 0 && dir == "left")
+    while(packman.x < 4*box && packman.y>8*box && dir == "left")
+    {
+      packman.x = 7 + 4*box;
+    }
+  }
+
+  if (packman.x < 4*box && packman.y<10*box && packman.y>9*box) 
+  {
+    while(packman.x < 4*box && packman.y<10*box && packman.y>9*box && dir == "up")
+    {
+      packman.y = 7 + 10*box;
+    }
+  }
+
+  if (packman.x < 4*box && packman.y<10*box && packman.y>9*box) 
+  {
+    while(packman.x < 4*box && packman.y<10*box && packman.y>9*box && dir == "down")
+    {
+      packman.y = 7 + 8*box;
+    }
+  }
+
+  if (packman.x < 0 && (packman.y<7+2*box || packman.y>7+4*box)) 
+  {
+    while(packman.x < 0 && (packman.y<7+2*box || packman.y>7+4*box) && dir == "left")
     {
       packman.x = 7.5;
     }
   }
 
-  if (packman.x > 530) 
+  if (packman.x > 530 && (packman.y<7+2*box || packman.y>7+4*box)) 
   {
-    while(packman.x > 530 && dir == "right")
-    {
-      packman.x = 492;
-    }
-  }
-
-  if (packman.x > 530) 
-  {
-    while(packman.x > 530 && dir == "right")
+    while(packman.x > 530 && (packman.y<7+2*box || packman.y>7+4*box) && dir == "right")
     {
       packman.x = 492;
     }
@@ -155,10 +184,273 @@ function drawGame() {
     }
   }
 
+
+  if (packman.x > 7+7*box && packman.y==7+9*box) 
+  {
+    while(packman.x >7 + 7*box && packman.y==7+9*box && dir == "right")
+    {
+      packman.x = 7 + 7*box;
+    }
+  }
+
+  if (packman.x > 8*box && packman.y==7+9*box) 
+  {
+    while(packman.x >8*box && packman.y==7+9*box && dir == "up")
+    {
+      packman.y = 7 + 10*box;
+    }
+  }
+
+  if (packman.x > 8*box && packman.y==7+9*box) 
+  {
+    while(packman.x >8*box && packman.y==7+9*box && dir == "down")
+    {
+      packman.y = 7 + 8*box;
+    }
+  }
+
+  if (packman.x < 4*box && packman.y==7+5*box) 
+  {
+    while(packman.x < 4*box && packman.y==7+5*box && dir == "left")
+    {
+      packman.x = 7 + 4*box;
+    }
+  }
+
+  if (packman.x < 4*box && packman.y==7+5*box) 
+  {
+    while(packman.x < 4*box && packman.y==7+5*box && dir == "down")
+    {
+      packman.y = 7 + 4*box;
+    }
+  }
+
+  if (packman.x < 4*box && packman.y==7+5*box) 
+  {
+    while(packman.x < 4*box && packman.y==7+5*box && dir == "up")
+    {
+      packman.y = 7 + 6*box;
+    }
+  }
   
+if (packman.x >2*box && packman.x<4*box && packman.y > 5*box && packman.y < 8*box) 
+  {
+    while(packman.x > 7+2*box && packman.y > 5*box && packman.y < 8*box && dir == "right")
+    {
+      packman.x = 7 + 2*box;
+    }
+  }
+
+  if (packman.x >2*box && packman.x<4*box && packman.y > 5*box && packman.y < 8*box) 
+  {
+    while(packman.x >2*box && packman.x<4*box && packman.y > 5*box && packman.y < 8*box && dir == "left")
+    {
+      packman.x = 7 + 4*box;
+    }
+  }
+
+  if (packman.x >10+2*box && packman.x<4*box && packman.y > 5*box && packman.y < 8*box) 
+  {
+    while(packman.x >2*box && packman.x<4*box && packman.y > 5*box && packman.y < 8*box && dir == "up")
+    {
+      packman.y = 7 + 8*box;
+    }
+  }
+
+  if (packman.x > 10+7*box && packman.y==7+5*box) 
+  {
+    while(packman.x >7+7*box && packman.y==7+5*box && dir == "up")
+    {
+      packman.y = 7 + 6*box;
+    }
+  }
+
+  if (packman.x > 10+7*box && packman.y==7+5*box) 
+  {
+    while(packman.x >7+7*box && packman.y==7+5*box && dir == "down")
+    {
+      packman.y = 7 + 4*box;
+    }
+  }
+  if (packman.x > 10+7*box && packman.y==7+5*box) 
+  {
+    while(packman.x >7+7*box && packman.y==7+5*box && dir == "right")
+    {
+      packman.x = 7 + 7*box;
+    }
+  }
+
+  if (packman.x >10+7*box && packman.x<9*box && packman.y > 5*box && packman.y < 8*box) 
+  {
+    while(packman.x >10+7*box && packman.x<9*box && packman.y > 5*box && packman.y < 8*box && dir == "right")
+    {
+      packman.x = 7 + 7*box;
+    }
+  }
+
+  if (packman.x >10+7*box && packman.x<9*box && packman.y > 5*box && packman.y < 8*box) 
+  {
+    while(packman.x >10+7*box && packman.x<9*box && packman.y > 5*box && packman.y < 8*box && dir == "left")
+    {
+      packman.x = 7 + 9*box;
+    }
+  }
+
+  if (packman.x >10+7*box && packman.x<9*box && packman.y > 5*box && packman.y < 8*box) 
+  {
+    while(packman.x >10+7*box && packman.x<9*box && packman.y > 5*box && packman.y < 8*box && dir == "up")
+    {
+      packman.y = 7 + 8*box;
+    }
+  }
+
+  if (packman.y > 1*box && packman.y < 3*box && packman.x<2*box) 
+  {
+    while( packman.y > 1*box && packman.y < 3*box && packman.x<2*box && dir =="up")
+    {
+      packman.y = 7 + 3*box;
+    }
+  }
+
+  if (packman.y > 1*box && packman.y < 3*box && packman.x<2*box) 
+  {
+    while( packman.y > 7 + 1*box && packman.y <7+ 3*box && packman.x<2*box && dir =="down")
+    {
+      packman.y = 7 + 1*box;
+    }
+  }
+
+  if (packman.y > 1*box && packman.y < 3*box && packman.x<2*box) 
+  {
+    while( packman.y > 7 + 1*box && packman.y <7+ 3*box && packman.x<2*box && dir =="left")
+    {
+      packman.x = 7 + 2*box;
+    }
+  }
+
+  if (packman.y > 7+1*box && packman.y < 3*box && packman.x>10*box) 
+  {
+    while(packman.y >7+ 1*box && packman.y < 3*box && packman.x>10*box && dir =="down")
+    {
+      packman.y = 7 + 1*box;
+    }
+  }
+
+  if (packman.y > 7+1*box && packman.y < 3*box && packman.x>10*box) 
+  {
+    while(packman.y >7+ 1*box && packman.y < 3*box && packman.x>10*box && dir =="up")
+    {
+      packman.y = 7 + 3*box;
+    }
+  }
+
+  if (packman.y > 7+1*box && packman.y < 3*box && packman.x>10*box) 
+  {
+    while(packman.y >7+ 1*box && packman.y < 3*box && packman.x>10*box && dir =="right")
+    {
+      packman.x = 7 + 9*box;
+    }
+  }
+
+  if (packman.x >7+2*box && packman.x<7+4*box && packman.y<7+3*box) 
+  {
+    while(packman.x >7+2*box && packman.x<7+4*box && packman.y<7+3*box && dir == "right")
+    {
+      packman.x = 7 + 2*box;
+    }
+  }
+
+  if (packman.x >7+2*box && packman.x<7+4*box && packman.y<7+3*box) 
+  {
+    while(packman.x >7+2*box && packman.x<7+4*box && packman.y<7+3*box && dir == "left")
+    {
+      packman.x = 7 + 4*box;
+    }
+  }
+
+  if (packman.x >3*box && packman.x<7+4*box && packman.y<7+3*box) 
+  {
+    while(packman.x >7+2*box && packman.x<7+4*box && packman.y<7+3*box && dir == "up")
+    {
+      packman.y = 7 + 3*box;
+    }
+  }
+
+  if (packman.x >8*box && packman.x<7+9*box && packman.y<7+3*box) 
+  {
+    while(packman.x >7+7*box && packman.x<7+9*box && packman.y<7+3*box && dir == "up")
+    {
+      packman.y = 7 + 3*box;
+    }
+  }
+
+  if (packman.x >7+7*box && packman.x<7+9*box && packman.y<7+3*box) 
+  {
+    while(packman.x >7+7*box && packman.x<7+9*box && packman.y<7+3*box && dir == "left")
+    {
+      packman.x = 7 + 9*box;
+    }
+  }
+
+  if (packman.x >7+7*box && packman.x<7+9*box && packman.y<7+3*box) 
+  {
+    while(packman.x >7+7*box && packman.x<7+9*box && packman.y<7+3*box && dir == "right")
+    {
+      packman.x = 7 + 7*box;
+    }
+  }
+
+  if (packman.x>7+4*box && packman.x<7+7*box && packman.y > 7+2*box && packman.y<7+5*box) 
+  {
+    while(packman.x>7+4*box && packman.x<7+7*box && packman.y > 7+2*box && packman.y<7+5*box && dir == "right")
+    {
+      packman.x = 7 + 4*box;
+    }
+  }
+
+  if (packman.x>5*box && packman.x<7+7*box && packman.y > 7+2*box && packman.y<7+5*box) 
+  {
+    while(packman.x>5*box && packman.x<7+7*box && packman.y > 7+2*box && packman.y<7+5*box && dir == "up")
+    {
+      packman.y = 7 + 5*box;
+    }
+  }
+
+  if (packman.x>7+4*box && packman.x<7+7*box && packman.y > 7+2*box && packman.y<7+5*box) 
+  {
+    while(packman.x>7+4*box && packman.x<7+7*box && packman.y > 7+2*box && packman.y<7+5*box && dir == "left")
+    {
+      packman.x = 7 + 7*box;
+    }
+  }
+
+  if (packman.x>7+4*box && packman.x<7+7*box && packman.y > 7+2*box && packman.y<7+5*box) 
+  {
+    while(packman.x>7+4*box && packman.x<7+7*box && packman.y > 7+2*box && packman.y<7+5*box && dir == "down")
+    {
+      packman.y = 7 + 2*box;
+    }
+  }
+  
+  if (packman.x<0 && packman.y>7+2*box && packman.y<5*box ) 
+  {
+    while(packman.x<0 && packman.y>7+2*box && packman.y<5*box && dir == "left")
+    {
+      packman.x = 7 + 11*box;
+    }
+  }
+
+
+  if (packman.x>530 && packman.y>7+2*box && packman.y<5*box ) 
+  {
+    while(packman.x>530 && packman.y>7+2*box && packman.y<5*box && dir == "right")
+    {
+      packman.x = 7 + 0*box;
+    }
+  }
 }
 
-let game = setInterval(drawGame, 120);
+let game = setInterval(drawGame, 130);
 
 
 
