@@ -96,7 +96,7 @@ function direction(event) {
 //}
 
 function genRandSide(){
-  return randSideGhost1 = Math.floor(Math.random()* 4 + 1)
+  return randSideGhost1 = Math.floor(Math.random()* 20 + 1)
 }
 
 //Массив со сдвигами от начала координат и шириной/длиной стенок 
@@ -134,7 +134,6 @@ function drawWalls(){
   });
 
   ctx.drawImage(packamImg, packman.x, packman.y);
-
   
 
   let side = genRandSide()
@@ -152,6 +151,23 @@ function drawWalls(){
   if (side1 == 2) {sideStr1 = "up"; ghost2.y -= box}
   if (side1 == 3) {sideStr1 = "left"; ghost2.x -= box}
   if (side1 == 4) {sideStr1 = "down";ghost2.y += box}
+
+  let side2 = genRandSide()
+  let sideStr2 = " "
+
+  if (side2 == 1) {sideStr2 = "right"; ghost3.x += box}
+  if (side2 == 2) {sideStr2 = "up"; ghost3.y -= box}
+  if (side2 == 3) {sideStr2 = "left"; ghost3.x -= box}
+  if (side2 == 4) {sideStr2 = "down";ghost3.y += box}
+
+  let side3 = genRandSide()
+  let sideStr3 = " "
+
+  if (side3 == 1) {sideStr3 = "right"; ghost4.x += box}
+  if (side3 == 2) {sideStr3 = "up"; ghost4.y -= box}
+  if (side3 == 3) {sideStr3 = "left"; ghost4.x -= box}
+  if (side3 == 4) {sideStr3 = "down";ghost4.y += box}
+
 
   if (dir == "left") packman.x -= box;
   if (dir == "right") packman.x += box;
@@ -246,7 +262,7 @@ function drawWalls(){
 
 /////////////////////////////////////
 /////////////////////////////////////
-/////////Условие для призрака////////
+///////Условие для призрака №1///////
 /////////////////////////////////////
 /////////////////////////////////////
 
@@ -337,13 +353,11 @@ function drawWalls(){
 
 
 
-
-
-
-
-
-
-
+/////////////////////////////////////
+/////////////////////////////////////
+///////Условие для призрака №2///////
+/////////////////////////////////////
+/////////////////////////////////////
 
 
 
@@ -432,6 +446,189 @@ if (ghost2.x<0 && ghost2.y>7+2*box && ghost2.y<5*box && sideStr1 == "left") ghos
 if (ghost2.x>530 && ghost2.y>7+2*box && ghost2.y<5*box  && sideStr1 == "right") ghost2.x = 7 + 0*box;
 
 
+/////////////////////////////////////
+/////////////////////////////////////
+///////Условие для призрака №3///////
+/////////////////////////////////////
+/////////////////////////////////////
+
+
+//Условие для нижней левой стенки
+if (ghost3.x < 4 * box && ghost3.y < 10 * box && ghost3.y > 9 * box) {
+  if (sideStr2 == "left") ghost3.x = 7 + 4 * box;
+  if (sideStr2 == "up") ghost3.y = 7 + 10 * box;
+  if (sideStr2 == "down") ghost3.y = 7 + 8 * box;
+}
+
+//Условие для границ карты слева/справа
+if ((ghost3.y<7+2*box || ghost3.y>7+4*box)) { 
+  if (ghost3.x < 0 &&  sideStr2 == "left") ghost3.x = 7.5;
+  if (ghost3.x > 530 &&  sideStr2 == "right") ghost3.x = 492;
+} 
+
+//Условие для границ сверху/снизу 
+if (ghost3.y > 487 && sideStr2 =="down") ghost3.y = 447;
+if (ghost3.y < 0 && sideStr2 == "up") ghost3.y = 7;
+
+//Условие для нижней правой стенки
+if (ghost3.x > 7+7*box && ghost3.y==7+9*box && sideStr2 == "right") ghost3.x = 7 + 7*box;
+if (ghost3.x > 8*box && ghost3.y==7+9*box){
+  if (sideStr2 == "up") ghost3.y = 7 + 10*box;
+  if (sideStr2 == "down") ghost3.y = 7 + 8*box;
+}
+//Условие для горизонтальной стенки по цетру слева
+if (ghost3.x < 4*box && ghost3.y==7+5*box){
+  if (sideStr2 == "left") ghost3.x = 7 + 4*box;
+  if (sideStr2 == "down") ghost3.y = 7 + 4*box;
+  if (sideStr2 == "up") ghost3.y = 7 + 6*box;
+}
+//Условие для вертикальной стенки по центру слева
+if (ghost3.x >2*box && ghost3.x<4*box && ghost3.y > 5*box && ghost3.y < 8*box){
+  if (sideStr2 == "right") ghost3.x = 7 + 2*box;
+  if (sideStr2 == "left")  ghost3.x = 7 + 4*box;
+  }
+if (ghost3.x >10+2*box && ghost3.x<4*box && ghost3.y > 5*box && ghost3.y < 8*box && sideStr2 == "up") ghost3.y = 7 + 8*box;
+//Условие для горизонтальной стенки по центру справа
+if (ghost3.x > 10+7*box && ghost3.y==7+5*box){
+  if (sideStr2 == "up") ghost3.y = 7 + 6*box;
+  if (sideStr2 == "down") ghost3.y = 7 + 4*box;
+  if (sideStr2 == "right") ghost3.x = 7 + 7*box;
+}
+//Условие для вертикальной стенки по центру справа
+if (ghost3.x >10+7*box && ghost3.x<9*box && ghost3.y > 5*box && ghost3.y < 8*box) {
+  if (sideStr2 == "right") ghost3.x = 7 + 7*box;
+  if (sideStr2 == "left") ghost3.x = 7 + 9*box;
+  if (sideStr2 == "up") ghost3.y = 7 + 8*box;
+}
+//Условие для горизотнальной стенки сверху слева
+if(ghost3.y > 7 + 1*box && ghost3.y <7+ 3*box && ghost3.x<2*box){
+  if (sideStr2 =="up") ghost3.y = 7 + 3*box;
+  if (sideStr2 =="down") ghost3.y = 7 + 1*box;
+  if (sideStr2 =="left") ghost3.x = 7 + 2*box;
+}
+//Условие для горизонтальной стенки сврху слева
+if (ghost3.y > 7+1*box && ghost3.y < 3*box && ghost3.x>10*box) {
+  if (sideStr2 =="down") ghost3.y = 7 + 1*box;
+  if (sideStr2 =="up") ghost3.y = 7 + 3*box;
+  if (sideStr2 =="right") ghost3.x = 7 + 9*box;
+}
+//Условие для вертикальной стенки сверху слева
+if (ghost3.x >7+2*box && ghost3.x<7+4*box && ghost3.y<7+3*box) {
+  if (sideStr2 == "right") ghost3.x = 7 + 2*box;
+  if (sideStr2 == "left") ghost3.x = 7 + 4*box;
+  if (sideStr2 == "up") ghost3.y = 7 + 3*box;
+}
+//Условие для вертикальной стенки сверху справа
+if (ghost3.x >7+7*box && ghost3.x<7+9*box && ghost3.y<7+3*box) {
+  if (sideStr2 == "up") ghost3.y = 7 + 3*box;
+  if (sideStr2 == "left") ghost3.x = 7 + 9*box;
+  if (sideStr2 == "right") ghost3.x = 7 + 7*box;
+}
+//Условие для центрального квадрата
+if (ghost3.x>7+4*box && ghost3.x<7+7*box && ghost3.y > 7+2*box && ghost3.y<7+5*box) {
+  if (sideStr2 == "right") ghost3.x = 7 + 4*box;
+  if (sideStr2 == "up") ghost3.y = 7 + 5*box;
+  if (sideStr2 == "left") ghost3.x = 7 + 7*box;
+  if (sideStr2 == "down") ghost3.y = 7 + 2*box;
+}
+//Условие для прохода слева
+if (ghost3.x<0 && ghost3.y>7+2*box && ghost3.y<5*box && sideStr2 == "left") ghost3.x = 7 + 11*box;
+
+//Условие для прохода справа
+if (ghost3.x>530 && ghost3.y>7+2*box && ghost3.y<5*box  && sideStr2 == "right") ghost3.x = 7 + 0*box;
+
+
+
+/////////////////////////////////////
+/////////////////////////////////////
+///////Условие для призрака №4///////
+/////////////////////////////////////
+/////////////////////////////////////
+
+
+//Условие для нижней левой стенки
+if (ghost4.x < 4 * box && ghost4.y < 10 * box && ghost4.y > 9 * box) {
+  if (sideStr3 == "left") ghost4.x = 7 + 4 * box;
+  if (sideStr3 == "up") ghost4.y = 7 + 10 * box;
+  if (sideStr3 == "down") ghost4.y = 7 + 8 * box;
+}
+
+//Условие для границ карты слева/справа
+if ((ghost4.y<7+2*box || ghost4.y>7+4*box)) { 
+  if (ghost4.x < 0 &&  sideStr3 == "left") ghost4.x = 7.5;
+  if (ghost4.x > 530 &&  sideStr3 == "right") ghost4.x = 492;
+} 
+
+//Условие для границ сверху/снизу 
+if (ghost4.y > 487 && sideStr3 =="down") ghost4.y = 447;
+if (ghost4.y < 0 && sideStr3 == "up") ghost4.y = 7;
+
+//Условие для нижней правой стенки
+if (ghost4.x > 7+7*box && ghost4.y==7+9*box && sideStr3 == "right") ghost4.x = 7 + 7*box;
+if (ghost4.x > 8*box && ghost4.y==7+9*box){
+  if (sideStr3 == "up") ghost4.y = 7 + 10*box;
+  if (sideStr3 == "down") ghost4.y = 7 + 8*box;
+}
+//Условие для горизонтальной стенки по цетру слева
+if (ghost4.x < 4*box && ghost4.y==7+5*box){
+  if (sideStr3 == "left") ghost4.x = 7 + 4*box;
+  if (sideStr3 == "down") ghost4.y = 7 + 4*box;
+  if (sideStr3 == "up") ghost4.y = 7 + 6*box;
+}
+//Условие для вертикальной стенки по центру слева
+if (ghost4.x >2*box && ghost4.x<4*box && ghost4.y > 5*box && ghost4.y < 8*box){
+  if (sideStr3 == "right") ghost4.x = 7 + 2*box;
+  if (sideStr3 == "left")  ghost4.x = 7 + 4*box;
+  }
+if (ghost4.x >10+2*box && ghost4.x<4*box && ghost4.y > 5*box && ghost4.y < 8*box && sideStr3 == "up") ghost4.y = 7 + 8*box;
+//Условие для горизонтальной стенки по центру справа
+if (ghost4.x > 10+7*box && ghost4.y==7+5*box){
+  if (sideStr3 == "up") ghost4.y = 7 + 6*box;
+  if (sideStr3 == "down") ghost4.y = 7 + 4*box;
+  if (sideStr3 == "right") ghost4.x = 7 + 7*box;
+}
+//Условие для вертикальной стенки по центру справа
+if (ghost4.x >10+7*box && ghost4.x<9*box && ghost4.y > 5*box && ghost4.y < 8*box) {
+  if (sideStr3 == "right") ghost4.x = 7 + 7*box;
+  if (sideStr3 == "left") ghost4.x = 7 + 9*box;
+  if (sideStr3 == "up") ghost4.y = 7 + 8*box;
+}
+//Условие для горизотнальной стенки сверху слева
+if(ghost4.y > 7 + 1*box && ghost4.y <7+ 3*box && ghost4.x<2*box){
+  if (sideStr3 =="up") ghost4.y = 7 + 3*box;
+  if (sideStr3 =="down") ghost4.y = 7 + 1*box;
+  if (sideStr3 =="left") ghost4.x = 7 + 2*box;
+}
+//Условие для горизонтальной стенки сврху слева
+if (ghost4.y > 7+1*box && ghost4.y < 3*box && ghost4.x>10*box) {
+  if (sideStr3 =="down") ghost4.y = 7 + 1*box;
+  if (sideStr3 =="up") ghost4.y = 7 + 3*box;
+  if (sideStr3 =="right") ghost4.x = 7 + 9*box;
+}
+//Условие для вертикальной стенки сверху слева
+if (ghost4.x >7+2*box && ghost4.x<7+4*box && ghost4.y<7+3*box) {
+  if (sideStr3 == "right") ghost4.x = 7 + 2*box;
+  if (sideStr3 == "left") ghost4.x = 7 + 4*box;
+  if (sideStr3 == "up") ghost4.y = 7 + 3*box;
+}
+//Условие для вертикальной стенки сверху справа
+if (ghost4.x >7+7*box && ghost4.x<7+9*box && ghost4.y<7+3*box) {
+  if (sideStr3 == "up") ghost4.y = 7 + 3*box;
+  if (sideStr3 == "left") ghost4.x = 7 + 9*box;
+  if (sideStr3 == "right") ghost4.x = 7 + 7*box;
+}
+//Условие для центрального квадрата
+if (ghost4.x>7+4*box && ghost4.x<7+7*box && ghost4.y > 7+2*box && ghost4.y<7+5*box) {
+  if (sideStr3 == "right") ghost4.x = 7 + 4*box;
+  if (sideStr3 == "up") ghost4.y = 7 + 5*box;
+  if (sideStr3 == "left") ghost4.x = 7 + 7*box;
+  if (sideStr3 == "down") ghost4.y = 7 + 2*box;
+}
+//Условие для прохода слева
+if (ghost4.x<0 && ghost4.y>7+2*box && ghost4.y<5*box && sideStr3 == "left") ghost4.x = 7 + 11*box;
+
+//Условие для прохода справа
+if (ghost4.x>530 && ghost4.y>7+2*box && ghost4.y<5*box  && sideStr3 == "right") ghost4.x = 7 + 0*box;
 
 }
 
