@@ -86,8 +86,22 @@ function direction(event) {
   else if(event.keyCode == 40)
     dir = "down"
 }
-// ctx.rotate(inRad(20))
+// let randCordGhost1={
+// x:0,
+// y:0
+// }
+// function genRandCord(){
+// randCordGhost1.x = Math.floor(Math.random() * 11) * box
+// randCordGhost1.y = Math.floor(Math.random() * 10) * box
+//}
 
+function genRandSide(){
+  return randSideGhost1 = Math.floor(Math.random()* 20 + 1)
+}
+
+
+// ctx.rotate(inRad(20))
+// console.log(randCordGhost1.x,randCordGhost1.y)
 function drawGame() {
  
   ctx.drawImage(ground,0,0);
@@ -108,6 +122,20 @@ function drawGame() {
   ctx.drawImage(ghostImg,ghost3.x,ghost3.y);
   ctx.drawImage(ghostImg,ghost4.x,ghost4.y);
   ctx.drawImage(packamImg,packman.x,packman.y);
+  
+  let side = genRandSide()
+  let sideStr = " "
+  if (side == 1) sideStr = "right"
+  if (side == 2) sideStr = "up"
+  if (side == 3) sideStr = "left"
+  if (side == 4) sideStr = "down"
+  if (side==1) ghost1.x += box
+  if (side==2) ghost1.y -= box
+  if (side==3) ghost1.x -= box
+  if (side==4) ghost1.y += box
+
+
+  
   
   let pacmanX = packman.x;
   let pacmanY = packman.y;
@@ -448,9 +476,332 @@ if (packman.x >2*box && packman.x<4*box && packman.y > 5*box && packman.y < 8*bo
       packman.x = 7 + 0*box;
     }
   }
+
+
+  if (ghost1.x < 4*box && ghost1.y<10*box && ghost1.y>9*box) 
+  {
+    while(ghost1.x < 4*box && ghost1.y>8*box && sideStr == "left")
+    {
+      ghost1.x = 7 + 4*box;
+    }
+  }
+
+  if (ghost1.x < 4*box && ghost1.y<10*box && ghost1.y>9*box) 
+  {
+    while(ghost1.x < 4*box && ghost1.y<10*box && ghost1.y>9*box && sideStr == "up")
+    {
+      ghost1.y = 7 + 10*box;
+    }
+  }
+
+  if (ghost1.x < 4*box && ghost1.y<10*box && ghost1.y>9*box) 
+  {
+    while(ghost1.x < 4*box && ghost1.y<10*box && ghost1.y>9*box && sideStr == "down")
+    {
+      ghost1.y = 7 + 8*box;
+    }
+  }
+
+  if (ghost1.x < 0 && (ghost1.y<7+2*box || ghost1.y>7+4*box)) 
+  {
+    while(ghost1.x < 0 && (ghost1.y<7+2*box || ghost1.y>7+4*box) && sideStr == "left")
+    {
+      ghost1.x = 7.5;
+    }
+  }
+
+  if (ghost1.x > 530 && (ghost1.y<7+2*box || ghost1.y>7+4*box)) 
+  {
+    while(ghost1.x > 530 && (ghost1.y<7+2*box || ghost1.y>7+4*box) && sideStr == "right")
+    {
+      ghost1.x = 492;
+    }
+  }
+
+  if (ghost1.y > 487) 
+  {
+    while(ghost1.y > 487 && sideStr == "down")
+    {
+      ghost1.y = 447;
+    }
+  }
+
+  if (ghost1.y < 0) 
+  {
+    while(ghost1.y < 0 && sideStr == "up")
+    {
+      ghost1.y = 7;
+    }
+  }
+
+
+  if (ghost1.x > 7+7*box && ghost1.y==7+9*box) 
+  {
+    while(ghost1.x >7 + 7*box && ghost1.y==7+9*box && sideStr == "right")
+    {
+      ghost1.x = 7 + 7*box;
+    }
+  }
+
+  if (ghost1.x > 8*box && ghost1.y==7+9*box) 
+  {
+    while(ghost1.x >8*box && ghost1.y==7+9*box && sideStr == "up")
+    {
+      ghost1.y = 7 + 10*box;
+    }
+  }
+
+  if (ghost1.x > 8*box && ghost1.y==7+9*box) 
+  {
+    while(ghost1.x >8*box && ghost1.y==7+9*box && sideStr == "down")
+    {
+      ghost1.y = 7 + 8*box;
+    }
+  }
+
+  if (ghost1.x < 4*box && ghost1.y==7+5*box) 
+  {
+    while(ghost1.x < 4*box && ghost1.y==7+5*box && sideStr == "left")
+    {
+      ghost1.x = 7 + 4*box;
+    }
+  }
+
+  if (ghost1.x < 4*box && ghost1.y==7+5*box) 
+  {
+    while(ghost1.x < 4*box && ghost1.y==7+5*box && sideStr == "down")
+    {
+      ghost1.y = 7 + 4*box;
+    }
+  }
+
+  if (ghost1.x < 4*box && ghost1.y==7+5*box) 
+  {
+    while(ghost1.x < 4*box && ghost1.y==7+5*box && sideStr == "up")
+    {
+      ghost1.y = 7 + 6*box;
+    }
+  }
+  
+if (ghost1.x >2*box && ghost1.x<4*box && ghost1.y > 5*box && ghost1.y < 8*box) 
+  {
+    while(ghost1.x > 7+2*box && ghost1.y > 5*box && ghost1.y < 8*box && sideStr == "right")
+    {
+      ghost1.x = 7 + 2*box;
+    }
+  }
+
+  if (ghost1.x >2*box && ghost1.x<4*box && ghost1.y > 5*box && ghost1.y < 8*box) 
+  {
+    while(ghost1.x >2*box && ghost1.x<4*box && ghost1.y > 5*box && ghost1.y < 8*box && sideStr == "left")
+    {
+      ghost1.x = 7 + 4*box;
+    }
+  }
+
+  if (ghost1.x >10+2*box && ghost1.x<4*box && ghost1.y > 5*box && ghost1.y < 8*box) 
+  {
+    while(ghost1.x >2*box && ghost1.x<4*box && ghost1.y > 5*box && ghost1.y < 8*box && sideStr == "up")
+    {
+      ghost1.y = 7 + 8*box;
+    }
+  }
+
+  if (ghost1.x > 10+7*box && ghost1.y==7+5*box) 
+  {
+    while(ghost1.x >7+7*box && ghost1.y==7+5*box && sideStr == "up")
+    {
+      ghost1.y = 7 + 6*box;
+    }
+  }
+
+  if (ghost1.x > 10+7*box && ghost1.y==7+5*box) 
+  {
+    while(ghost1.x >7+7*box && ghost1.y==7+5*box && sideStr == "down")
+    {
+      ghost1.y = 7 + 4*box;
+    }
+  }
+  if (ghost1.x > 10+7*box && ghost1.y==7+5*box) 
+  {
+    while(ghost1.x >7+7*box && ghost1.y==7+5*box && sideStr == "right")
+    {
+      ghost1.x = 7 + 7*box;
+    }
+  }
+
+  if (ghost1.x >10+7*box && ghost1.x<9*box && ghost1.y > 5*box && ghost1.y < 8*box) 
+  {
+    while(ghost1.x >10+7*box && ghost1.x<9*box && ghost1.y > 5*box && ghost1.y < 8*box && sideStr == "right")
+    {
+      ghost1.x = 7 + 7*box;
+    }
+  }
+
+  if (ghost1.x >10+7*box && ghost1.x<9*box && ghost1.y > 5*box && ghost1.y < 8*box) 
+  {
+    while(ghost1.x >10+7*box && ghost1.x<9*box && ghost1.y > 5*box && ghost1.y < 8*box && sideStr == "left")
+    {
+      ghost1.x = 7 + 9*box;
+    }
+  }
+
+  if (ghost1.x >10+7*box && ghost1.x<9*box && ghost1.y > 5*box && ghost1.y < 8*box) 
+  {
+    while(ghost1.x >10+7*box && ghost1.x<9*box && ghost1.y > 5*box && ghost1.y < 8*box && sideStr == "up")
+    {
+      ghost1.y = 7 + 8*box;
+    }
+  }
+
+  if (ghost1.y > 1*box && ghost1.y < 3*box && ghost1.x<2*box) 
+  {
+    while( ghost1.y > 1*box && ghost1.y < 3*box && ghost1.x<2*box && sideStr =="up")
+    {
+      ghost1.y = 7 + 3*box;
+    }
+  }
+
+  if (ghost1.y > 1*box && ghost1.y < 3*box && ghost1.x<2*box) 
+  {
+    while( ghost1.y > 7 + 1*box && ghost1.y <7+ 3*box && ghost1.x<2*box && sideStr =="down")
+    {
+      ghost1.y = 7 + 1*box;
+    }
+  }
+
+  if (ghost1.y > 1*box && ghost1.y < 3*box && ghost1.x<2*box) 
+  {
+    while( ghost1.y > 7 + 1*box && ghost1.y <7+ 3*box && ghost1.x<2*box && sideStr =="left")
+    {
+      ghost1.x = 7 + 2*box;
+    }
+  }
+
+  if (ghost1.y > 7+1*box && ghost1.y < 3*box && ghost1.x>10*box) 
+  {
+    while(ghost1.y >7+ 1*box && ghost1.y < 3*box && ghost1.x>10*box && sideStr =="down")
+    {
+      ghost1.y = 7 + 1*box;
+    }
+  }
+
+  if (ghost1.y > 7+1*box && ghost1.y < 3*box && ghost1.x>10*box) 
+  {
+    while(ghost1.y >7+ 1*box && ghost1.y < 3*box && ghost1.x>10*box && sideStr =="up")
+    {
+      ghost1.y = 7 + 3*box;
+    }
+  }
+
+  if (ghost1.y > 7+1*box && ghost1.y < 3*box && ghost1.x>10*box) 
+  {
+    while(ghost1.y >7+ 1*box && ghost1.y < 3*box && ghost1.x>10*box && sideStr =="right")
+    {
+      ghost1.x = 7 + 9*box;
+    }
+  }
+
+  if (ghost1.x >7+2*box && ghost1.x<7+4*box && ghost1.y<7+3*box) 
+  {
+    while(ghost1.x >7+2*box && ghost1.x<7+4*box && ghost1.y<7+3*box && sideStr == "right")
+    {
+      ghost1.x = 7 + 2*box;
+    }
+  }
+
+  if (ghost1.x >7+2*box && ghost1.x<7+4*box && ghost1.y<7+3*box) 
+  {
+    while(ghost1.x >7+2*box && ghost1.x<7+4*box && ghost1.y<7+3*box && sideStr == "left")
+    {
+      ghost1.x = 7 + 4*box;
+    }
+  }
+
+  if (ghost1.x >3*box && ghost1.x<7+4*box && ghost1.y<7+3*box) 
+  {
+    while(ghost1.x >7+2*box && ghost1.x<7+4*box && ghost1.y<7+3*box && sideStr == "up")
+    {
+      ghost1.y = 7 + 3*box;
+    }
+  }
+
+  if (ghost1.x >8*box && ghost1.x<7+9*box && ghost1.y<7+3*box) 
+  {
+    while(ghost1.x >7+7*box && ghost1.x<7+9*box && ghost1.y<7+3*box && sideStr == "up")
+    {
+      ghost1.y = 7 + 3*box;
+    }
+  }
+
+  if (ghost1.x >7+7*box && ghost1.x<7+9*box && ghost1.y<7+3*box) 
+  {
+    while(ghost1.x >7+7*box && ghost1.x<7+9*box && ghost1.y<7+3*box && sideStr == "left")
+    {
+      ghost1.x = 7 + 9*box;
+    }
+  }
+
+  if (ghost1.x >7+7*box && ghost1.x<7+9*box && ghost1.y<7+3*box) 
+  {
+    while(ghost1.x >7+7*box && ghost1.x<7+9*box && ghost1.y<7+3*box && sideStr == "right")
+    {
+      ghost1.x = 7 + 7*box;
+    }
+  }
+
+  if (ghost1.x>7+4*box && ghost1.x<7+7*box && ghost1.y > 7+2*box && ghost1.y<7+5*box) 
+  {
+    while(ghost1.x>7+4*box && ghost1.x<7+7*box && ghost1.y > 7+2*box && ghost1.y<7+5*box && sideStr == "right")
+    {
+      ghost1.x = 7 + 4*box;
+    }
+  }
+
+  if (ghost1.x>5*box && ghost1.x<7+7*box && ghost1.y > 7+2*box && ghost1.y<7+5*box) 
+  {
+    while(ghost1.x>5*box && ghost1.x<7+7*box && ghost1.y > 7+2*box && ghost1.y<7+5*box && sideStr == "up")
+    {
+      ghost1.y = 7 + 5*box;
+    }
+  }
+
+  if (ghost1.x>7+4*box && ghost1.x<7+7*box && ghost1.y > 7+2*box && ghost1.y<7+5*box) 
+  {
+    while(ghost1.x>7+4*box && ghost1.x<7+7*box && ghost1.y > 7+2*box && ghost1.y<7+5*box && sideStr == "left")
+    {
+      ghost1.x = 7 + 7*box;
+    }
+  }
+
+  if (ghost1.x>7+4*box && ghost1.x<7+7*box && ghost1.y > 7+2*box && ghost1.y<7+5*box) 
+  {
+    while(ghost1.x>7+4*box && ghost1.x<7+7*box && ghost1.y > 7+2*box && ghost1.y<7+5*box && sideStr == "down")
+    {
+      ghost1.y = 7 + 2*box;
+    }
+  }
+  
+  if (ghost1.x<0 && ghost1.y>7+2*box && ghost1.y<5*box ) 
+  {
+    while(ghost1.x<0 && ghost1.y>7+2*box && ghost1.y<5*box && sideStr == "left")
+    {
+      ghost1.x = 7 + 11*box;
+    }
+  }
+
+
+  if (ghost1.x>530 && ghost1.y>7+2*box && ghost1.y<5*box ) 
+  {
+    while(ghost1.x>530 && ghost1.y>7+2*box && ghost1.y<5*box && sideStr == "right")
+    {
+      ghost1.x = 7 + 0*box;
+    }
+  }
+
 }
 
-let game = setInterval(drawGame, 130);
+let game = setInterval(drawGame, 170);
 
 
 
