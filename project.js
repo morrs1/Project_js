@@ -25,7 +25,10 @@ const ground = new Image();
 ground.src = "img_pole5.jpg";
 
 const packamImg = new Image();
-packamImg.src = "packman2.png";
+packamImg.src = "pacman1.png";
+
+const parlicleImg = new Image();
+parlicleImg.src = "particle2.png";
 
 // class ghost{
 //   constuctor(){
@@ -68,8 +71,8 @@ let ghost4 = {
 }
 
 let packman = {
-  x:7 + 6*box,
-  y:7 + 5*box
+  x:7 + 11*box,
+  y:7 + 10*box
 };
 
 document.addEventListener("keydown",direction);
@@ -96,8 +99,22 @@ function direction(event) {
 //}
 
 function genRandSide(){
-  return randSideGhost1 = Math.floor(Math.random()* 20 + 1)
+  return randSideGhost1 = Math.floor(Math.random()* 10 + 1)
 }
+
+let arr = []
+
+for (i = 0;i<=11;i++){
+  for (j=0;j<=10;j++){
+    arr1 = [18+i*box,19+j*box]
+    arr.push(arr1)
+  }
+}
+
+// for (i = 0;i<arr.length;i++){
+//   console.log(arr[i])
+// }
+
 
 //Массив со сдвигами от начала координат и шириной/длиной стенок 
 const obstacles = [
@@ -119,61 +136,102 @@ function drawWalls(){
     ctx.fillRect(1 + x * box, 2 + y * box, width * box, height * box);
   });
 }
-
+var count = 0
+let countParticles = 0
 //Отрисовка игры
   function drawGame() {
   ctx.drawImage(ground,0,0);
   ctx.fillStyle="#1E90FF"
 
-//Отрисовка стен 
+//Отрисовка частиц
+
+  for (i = 0;i<arr.length;i++){
+    ctx.drawImage(parlicleImg,arr[i][0],arr[i][1])
+  }
+
   drawWalls()
   const ghosts = [ghost1, ghost2, ghost3, ghost4];
-
+  
   ghosts.forEach(ghost => {
     ctx.drawImage(ghostImg, ghost.x, ghost.y);
   });
 
   ctx.drawImage(packamImg, packman.x, packman.y);
   
+  
+  count +=1
+  // console.log(count)
 
+  //Реализация движения 1 призрака
   let side = genRandSide()
   let sideStr = " "
 
-  if (side == 1) {sideStr = "right"; ghost1.x += box}
-  if (side == 2) {sideStr = "up"; ghost1.y -= box}
-  if (side == 3) {sideStr = "left"; ghost1.x -= box}
-  if (side == 4) {sideStr = "down";ghost1.y += box}
+  if (count ==5 || count ==10 || count ==15 || count ==30) ghost1.x -= box
+  if (count ==20 || count ==25) ghost1.y -= box
+  if (count > 60) {
+    if (side == 1) {sideStr = "right"; ghost1.x += box}
+    if (side == 2) {sideStr = "up"; ghost1.y -= box}
+    if (side == 3) {sideStr = "left"; ghost1.x -= box}
+    if (side == 4) {sideStr = "down";ghost1.y += box}
+  }
 
+//Реализация движения 2 призрака
   let side1 = genRandSide()
   let sideStr1 = " "
 
-  if (side1 == 1) {sideStr1 = "right"; ghost2.x += box}
-  if (side1 == 2) {sideStr1 = "up"; ghost2.y -= box}
-  if (side1 == 3) {sideStr1 = "left"; ghost2.x -= box}
-  if (side1 == 4) {sideStr1 = "down";ghost2.y += box}
+  if (count ==5 || count ==10 || count ==15 || count ==30) ghost2.x += box
+  if (count ==20 || count ==25) ghost2.y -= box
+  if (count > 60) {
+    if (side1 == 1) {sideStr1 = "right"; ghost2.x += box}
+    if (side1 == 2) {sideStr1 = "up"; ghost2.y -= box}
+    if (side1 == 3) {sideStr1 = "left"; ghost2.x -= box}
+    if (side1 == 4) {sideStr1 = "down";ghost2.y += box}
+  }
 
+  //Реализация движения 4 призрака
   let side2 = genRandSide()
   let sideStr2 = " "
 
-  if (side2 == 1) {sideStr2 = "right"; ghost3.x += box}
-  if (side2 == 2) {sideStr2 = "up"; ghost3.y -= box}
-  if (side2 == 3) {sideStr2 = "left"; ghost3.x -= box}
-  if (side2 == 4) {sideStr2 = "down";ghost3.y += box}
+  if (count == 5 || count == 15 || count == 20 || count == 25) ghost3.y += box
+  if (count == 10 || count == 30 || count == 35 || count == 40) ghost3.x -= box
+  if (count == 45) ghost3.y -= box
+  if (count > 60) {
+    if (side2 == 1) {sideStr2 = "right"; ghost3.x += box}
+    if (side2 == 2) {sideStr2 = "up"; ghost3.y -= box}
+    if (side2 == 3) {sideStr2 = "left"; ghost3.x -= box}
+    if (side2 == 4) {sideStr2 = "down";ghost3.y += box}
+  }
 
+  //Реализация движения 4 призрака
   let side3 = genRandSide()
   let sideStr3 = " "
 
-  if (side3 == 1) {sideStr3 = "right"; ghost4.x += box}
-  if (side3 == 2) {sideStr3 = "up"; ghost4.y -= box}
-  if (side3 == 3) {sideStr3 = "left"; ghost4.x -= box}
-  if (side3 == 4) {sideStr3 = "down";ghost4.y += box}
+  if (count == 5 || count == 15 || count == 20 || count == 25) ghost4.y += box
+  if (count == 10 || count == 30 || count == 35 || count == 40) ghost4.x += box
+  if (count == 45) ghost4.y -= box
+  if (count > 60) {
+    if (side3 == 1) {sideStr3 = "right"; ghost4.x += box}
+    if (side3 == 2) {sideStr3 = "up"; ghost4.y -= box}
+    if (side3 == 3) {sideStr3 = "left"; ghost4.x -= box}
+    if (side3 == 4) {sideStr3 = "down";ghost4.y += box}
+  }
 
-
-  if (dir == "left") packman.x -= box;
-  if (dir == "right") packman.x += box;
-  if (dir == "down") packman.y += box;
-  if (dir == "up") packman.y -= box;
-
+//Реализация движения пакмана
+  if (count > 45){
+    if (dir == "left") packman.x -= box;
+    if (dir == "right") packman.x += box;
+    if (dir == "down") packman.y += box;
+    if (dir == "up") packman.y -= box;
+  }
+  
+  for (i = 0;i<arr.length;i++){
+    if (Math.floor(arr[i][0]/44) == Math.floor(packman.x/44)  && Math.floor(arr[i][1]/44) == Math.floor(packman.y/44))  {arr.splice(i,1); countParticles+=1}
+  }
+  console.log(countParticles)
+  // for (i = 0;i<arr.length;i++){
+  //   console.log(arr.length)
+  // }
+  console.log(packman.x,packman.y)
 //Условие для нижней левой стенки
   if (packman.x < 4 * box && packman.y < 10 * box && packman.y > 9 * box) {
     if (dir == "left") packman.x = 7 + 4 * box;
@@ -253,10 +311,10 @@ function drawWalls(){
     if (dir == "down") packman.y = 7 + 2*box;
   }
 //Условие для прохода слева
-  if (packman.x<0 && packman.y>7+2*box && packman.y<5*box && dir == "left") packman.x = 7 + 11*box;
+  if (packman.x<0 && packman.y>7+2*box && packman.y<5*box && dir == "left") packman.x = 51 + 11*box;
 
 //Условие для прохода справа
-  if (packman.x>530 && packman.y>7+2*box && packman.y<5*box  && dir == "right") packman.x = 7 + 0*box;
+  if (packman.x>530 && packman.y>7+2*box && packman.y<5*box  && dir == "right") packman.x = -37 + 0*box;
 
 
 
