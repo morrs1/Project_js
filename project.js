@@ -171,11 +171,9 @@ let countParticles = 0
   drawWalls()
   const ghosts = [ghost1, ghost2, ghost3, ghost4];
   
-  ghosts.forEach(ghost => {
-    ctx.drawImage(ghostImg, ghost.x, ghost.y);
-  });
+  
 
-  ctx.drawImage(packamImg, packman.x, packman.y);
+  
   
   
   count +=1
@@ -207,7 +205,7 @@ let countParticles = 0
     if (side1 == 4) {sideStr1 = "down";ghost2.y += box}
   }
 
-  //Реализация движения 4 призрака
+  //Реализация движения 3 призрака
   let side2 = genRandSide()
   let sideStr2 = " "
 
@@ -235,15 +233,14 @@ let countParticles = 0
     if (side3 == 4) {sideStr3 = "down";ghost4.y += box}
   }
 
+
+  if (countParticles==98) {alert('Вы победили!'); clearInterval(game)}
 //Реализация движения пакмана
 
-// if (Math.floor(packman.x/44)==Math.floor(ghost1.x/44) && Math.floor(packman.y/44)==Math.floor(ghost1.y/44)) game = null
-// if (Math.floor(packman.x/44)==Math.floor(ghost2.x/44) && Math.floor(packman.y/44)==Math.floor(ghost2.y/44)) game = null
-// if (Math.floor(packman.x/44)==Math.floor(ghost3.x/44) && Math.floor(packman.y/44)==Math.floor(ghost3.y/44)) game = null
-// if (Math.floor(packman.x/44)==Math.floor(ghost4.x/44) && Math.floor(packman.y/44)==Math.floor(ghost4.y/44)) game = null
 
 
-console.log(ghost1.x,ghost1.y)
+
+console.log("Призрак",Math.floor(ghost1.x/44),Math.floor(ghost1.y/44))
 
   if (count > 45){
     if (dir == "left") packman.x -= box;
@@ -251,15 +248,16 @@ console.log(ghost1.x,ghost1.y)
     if (dir == "down") packman.y += box;
     if (dir == "up") packman.y -= box;
   }
+
   
   for (i = 0;i<arr.length;i++){
     if (Math.floor(arr[i][0]) == Math.floor(packman.x/44)  && Math.floor(arr[i][1]) == Math.floor(packman.y/44))  {arr.splice(i,1); countParticles+=1}
   }
-  console.log(countParticles)
+  // console.log(countParticles)
   // for (i = 0;i<arr.length;i++){
   //   console.log(arr.length)
   // }
-  console.log(packman.x,packman.y)
+  
 //Условие для нижней левой стенки
   if (packman.x < 4 * box && packman.y < 10 * box && packman.y > 9 * box) {
     if (dir == "left") packman.x = 7 + 4 * box;
@@ -343,7 +341,6 @@ console.log(ghost1.x,ghost1.y)
 
 //Условие для прохода справа
   if (packman.x>530 && packman.y>7+2*box && packman.y<5*box  && dir == "right") packman.x = -37 + 0*box;
-
 
 
 /////////////////////////////////////
@@ -716,9 +713,18 @@ if (ghost4.x<0 && ghost4.y>7+2*box && ghost4.y<5*box && sideStr3 == "left") ghos
 //Условие для прохода справа
 if (ghost4.x>530 && ghost4.y>7+2*box && ghost4.y<5*box  && sideStr3 == "right") ghost4.x = 7 + 0*box;
 
+ghosts.forEach(ghost => {
+  ctx.drawImage(ghostImg, ghost.x, ghost.y);
+});
+ctx.drawImage(packamImg, packman.x, packman.y);
+if (Math.floor((packman.x/44))==Math.floor(ghost1.x/44) && Math.floor(packman.y/44)==((ghost1.y - 7)/44))   clearInterval(game)
+if (Math.floor(packman.x/44)==Math.floor(ghost2.x/44) && Math.floor(packman.y/44)==Math.floor(ghost2.y/44)) clearInterval(game)
+if (Math.floor(packman.x/44)==Math.floor(ghost3.x/44) && Math.floor(packman.y/44)==Math.floor(ghost3.y/44)) clearInterval(game)
+if (Math.floor(packman.x/44)==Math.floor(ghost4.x/44) && Math.floor(packman.y/44)==Math.floor(ghost4.y/44)) clearInterval(game)
+console.log(Math.floor(packman.x/44),Math.floor(packman.y/44))
 }
 
-let game = setInterval(drawGame, 150);
+let game = setInterval(drawGame, 100);
 
 
 
