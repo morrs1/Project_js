@@ -99,37 +99,56 @@ function direction(event) {
 //}
 
 function genRandSide(){
-  return randSideGhost1 = Math.floor(Math.random()* 10 + 1)
+  return randSideGhost1 = Math.floor(Math.random()* 20 + 1)
 }
 
-let arr = []
+//Массив с координатами частиц
+  let arr = [
+    [0,0],[1,0],                   [2,0],[-100,-100],[4,0],[5,0],[6,0],[7,0],[-100,-100],[9,0],               [10,0],[11,0],
+    [0,1],[1,1],                   [2,1],[-100,-100],[4,1],[5,1],[6,1],[7,1],[-100,-100],[9,1],               [10,1],[11,1],
+    [-100,-100],[-100,-100],       [2,2],[-100,-100],[4,2],[5,2],[6,2],[7,2],[-100,-100],[9,2],     [-100,-100],[-100,-100],
+    [0,3],[1,3],[2,3],[3,3],[4,3],                   [-100,-100],[-100,-100],               [7,3],[8,3],[9,3],[10,3],[11,3],
+    [0,4],[1,4],[2,4],[3,4],[4,4],                   [-100,-100],[-100,-100],               [7,4],[8,4],[9,4],[10,4],[11,4],
+    [-100,-100],[-100,-100],[-100,-100],[-100,-100],[4,5],[5,5],[6,5],[7,5],[-100,-100],[-100,-100],[-100,-100],[-100,-100],
+    [0,6],[1,6],[2,6],                  [-100,-100],[4,6],[5,6],[6,6],[7,6],[-100,-100],                [9,6],[10,6],[11,6],
+    [0,7],[1,7],[2,7],                  [-100,-100],[4,7],[5,7],[6,7],[7,7],[-100,-100],                [9,7],[10,7],[11,7],
+    [0,8],[1,8],[2,8],                              [3,8],[4,8],[5,8],[6,8],                [7,8],[8,8],[9,8],[10,8],[11,8],
+    [-100,-100],[-100,-100],[-100,-100],[-100,-100],[4,9],[5,9],[6,9],[7,9],[-100,-100],[-100,-100],[-100,-100],[-100,-100],
+    [0,10],[1,10],[2,10],                         [3,10],[4,10],[5,10],[6,10],         [7,10],[8,10],[9,10],[10,10],[11,10],
+  ]
 
-for (i = 0;i<=11;i++){
+
+/*for (i = 0;i<=11;i++){
   for (j=0;j<=10;j++){
     arr1 = [18+i*box,19+j*box]
     arr.push(arr1)
   }
 }
 
-// for (i = 0;i<arr.length;i++){
-//   console.log(arr[i])
-// }
+  for (i = 0;i<arr.length;i++){
+    if (arr[i][0]==0 && arr[i][1]==2 || arr[i][0]==0 && arr[i][1]==2) arr.spline(i,1)
+
+  } 
+for (i = 0;i<arr.length;i++){
+  console.log(arr[i])
+}*/
+
 
 
 //Массив со сдвигами от начала координат и шириной/длиной стенок 
-const obstacles = [
-    [0, 2, 2, 1],
-    [3, 0, 1, 3],
-    [10, 2, 2, 1],
-    [8, 0, 1, 3],
-    [0, 5, 3, 1],
-    [3, 5, 1, 3],
-    [9, 5, 3, 1],
-    [8, 5, 1, 3],
-    [5, 3, 2, 2],
-    [0, 9, 4, 1],
-    [8, 9, 4, 1],
-  ];
+  const obstacles = [
+      [0, 2, 2, 1],
+      [3, 0, 1, 3],
+      [10, 2, 2, 1],
+      [8, 0, 1, 3],
+      [0, 5, 3, 1],
+      [3, 5, 1, 3],
+      [9, 5, 3, 1],
+      [8, 5, 1, 3],
+      [5, 3, 2, 2],
+      [0, 9, 4, 1],
+      [8, 9, 4, 1],
+    ];
 
 function drawWalls(){
   obstacles.forEach(([x, y, width, height]) => {
@@ -146,7 +165,7 @@ let countParticles = 0
 //Отрисовка частиц
 
   for (i = 0;i<arr.length;i++){
-    ctx.drawImage(parlicleImg,arr[i][0],arr[i][1])
+    ctx.drawImage(parlicleImg,arr[i][0]*box+18,arr[i][1]*box+19)
   }
 
   drawWalls()
@@ -217,6 +236,15 @@ let countParticles = 0
   }
 
 //Реализация движения пакмана
+
+// if (Math.floor(packman.x/44)==Math.floor(ghost1.x/44) && Math.floor(packman.y/44)==Math.floor(ghost1.y/44)) game = null
+// if (Math.floor(packman.x/44)==Math.floor(ghost2.x/44) && Math.floor(packman.y/44)==Math.floor(ghost2.y/44)) game = null
+// if (Math.floor(packman.x/44)==Math.floor(ghost3.x/44) && Math.floor(packman.y/44)==Math.floor(ghost3.y/44)) game = null
+// if (Math.floor(packman.x/44)==Math.floor(ghost4.x/44) && Math.floor(packman.y/44)==Math.floor(ghost4.y/44)) game = null
+
+
+console.log(ghost1.x,ghost1.y)
+
   if (count > 45){
     if (dir == "left") packman.x -= box;
     if (dir == "right") packman.x += box;
@@ -225,7 +253,7 @@ let countParticles = 0
   }
   
   for (i = 0;i<arr.length;i++){
-    if (Math.floor(arr[i][0]/44) == Math.floor(packman.x/44)  && Math.floor(arr[i][1]/44) == Math.floor(packman.y/44))  {arr.splice(i,1); countParticles+=1}
+    if (Math.floor(arr[i][0]) == Math.floor(packman.x/44)  && Math.floor(arr[i][1]) == Math.floor(packman.y/44))  {arr.splice(i,1); countParticles+=1}
   }
   console.log(countParticles)
   // for (i = 0;i<arr.length;i++){
@@ -280,12 +308,12 @@ let countParticles = 0
     if (dir == "up") packman.y = 7 + 8*box;
   }
 //Условие для горизотнальной стенки сверху слева
-  if(packman.y > 7 + 1*box && packman.y <7+ 3*box && packman.x<2*box){
+  if(packman.y > 7 + 1*box && packman.y <7+ 3*box && packman.x<7+2*box){
     if (dir =="up") packman.y = 7 + 3*box;
     if (dir =="down") packman.y = 7 + 1*box;
     if (dir =="left") packman.x = 7 + 2*box;
 }
-//Условие для горизонтальной стенки сврху слева
+//Условие для горизонтальной стенки сврху справа
   if (packman.y > 7+1*box && packman.y < 3*box && packman.x>10*box) {
     if (dir =="down") packman.y = 7 + 1*box;
     if (dir =="up") packman.y = 7 + 3*box;
@@ -304,7 +332,7 @@ let countParticles = 0
     if (dir == "right") packman.x = 7 + 7*box;
   }
 //Условие для центрального квадрата
-  if (packman.x>7+4*box && packman.x<7+7*box && packman.y > 7+2*box && packman.y<7+5*box) {
+  if (packman.x>10+4*box && packman.x<7+7*box && packman.y > 7+2*box && packman.y<7+5*box) {
     if (dir == "right") packman.x = 7 + 4*box;
     if (dir == "up") packman.y = 7 + 5*box;
     if (dir == "left") packman.x = 7 + 7*box;
