@@ -78,6 +78,7 @@ let packman = {
 document.addEventListener("keydown",direction);
 
 let dir;
+let menu_pressed = 0;
 
 function direction(event) {
   if(event.keyCode == 37)
@@ -88,6 +89,10 @@ function direction(event) {
     dir = "right"
   else if(event.keyCode == 40)
     dir = "down"
+  if(event.keyCode == 27 && menu_pressed==0) {menu_pressed = 1; drawMenu(); clearInterval(game)}
+  else if (event.keyCode == 27 && menu_pressed == 1) {
+    //alert('test')
+    menu_pressed = 2; game = setInterval(drawGame,100)}
 }
 // let randCordGhost1={
 // x:0,
@@ -100,6 +105,10 @@ function direction(event) {
 
 function genRandSide(){
   return randSideGhost1 = Math.floor(Math.random()* 20 + 1)
+}
+
+function drawMenu(){
+  ctx.fillRect(7+2*box,7+2*box,3*box,3*box)
 }
 
 //Массив с координатами частиц
@@ -159,6 +168,7 @@ var count = 0
 let countParticles = 0
 //Отрисовка игры
   function drawGame() {
+   
   ctx.drawImage(ground,0,0);
   ctx.fillStyle="#1E90FF"
 
@@ -722,8 +732,8 @@ if (Math.floor(packman.x/44)==Math.floor(ghost2.x/44) && Math.floor(packman.y/44
 if (Math.floor(packman.x/44)==Math.floor(ghost3.x/44) && Math.floor(packman.y/44)==Math.floor(ghost3.y/44)) clearInterval(game)
 if (Math.floor(packman.x/44)==Math.floor(ghost4.x/44) && Math.floor(packman.y/44)==Math.floor(ghost4.y/44)) clearInterval(game)
 console.log(Math.floor(packman.x/44),Math.floor(packman.y/44))
-}
 
+  }
 let game = setInterval(drawGame, 100);
 
 
