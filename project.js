@@ -43,9 +43,69 @@ parlicleImg.src = "particle2.png";
 // ghost2.x =  7 + 6*box
 // ghost2.x =  7 + 7*box
 
+window.addEventListener("mousewheel", function(e) {
+  if (e.ctrlKey) {
+    e.preventDefault();
+    return false;
+  }
+});
+
+let flag = 0;
+let level = 0;
+const btnMenu = document.getElementById('btnMenu')
+const mainMenu = document.getElementById('mainMenu')
+const btnMainMenu1 = document.getElementById('btnMainMenu1')
+const btnMainMenu2 = document.getElementById('btnMainMenu2')
+const btnMainMenu3 = document.getElementById('btnMainMenu3')
+const btnMainMenu4 = document.getElementById('btnMainMenu4')
+let interval = 100
+
+btnMainMenu1.onclick = function(){
+  level = 1;
+  clearInterval(game)
+  game = setInterval(drawGame,150)
+  
+}
+btnMainMenu2.onclick = function(){
+  clearInterval(game)
+  game = setInterval(drawGame,150)
+  level = 2;
+ 
+}
+btnMainMenu3.onclick = function(){
+  clearInterval(game)
+  game = setInterval(drawGame,100)
+  level = 3;
+ 
+}
+// btnMainMenu4.onclick = function(){
+//   location.reload()
+//   level = 4;
+// }
+function ghostMovement(){
+  if (level == 1){
+    
+  }
+}
+
+btnMenu.onclick = function(){
+  if (flag == 0){
+    mainMenu.style.display = 'block'
+    flag = 1
+  }
+  else if (flag == 1){
+    mainMenu.style.display = 'none'
+    flag = 0
+  }
+}
+
+
 function inRad(x){
   return Math.PI * x/180
 }
+
+var ij = 0;
+var qj = 0;
 
 const ghostImg = new Image();
 ghostImg.src="ghost4.png"
@@ -74,42 +134,39 @@ let packman = {
   x:7 + 11*box,
   y:7 + 10*box
 };
+const menu = document.getElementById('menu1')
+const btn1 = document.getElementById('btn1')
+
+function createMenu(){
+btn1.style.display = 'block'
+menu.style.display = 'block'
+}
+
 
 document.addEventListener("keydown",direction);
 
 let dir;
 let menu_pressed = 0;
-
+var j = 0;
 function direction(event) {
-  if(event.keyCode == 37)
+  if(event.keyCode == 37 || event.keyCode ==65)
     dir = "left"
-  else if(event.keyCode == 38)
+  else if(event.keyCode == 38 || event.keyCode == 87)
     dir = "up"
-  else if(event.keyCode == 39)
+  else if(event.keyCode == 39 || event.keyCode == 68)
     dir = "right"
-  else if(event.keyCode == 40)
+  else if(event.keyCode == 40 || event.keyCode == 83)
     dir = "down"
-  if(event.keyCode == 27 && menu_pressed==0) {menu_pressed = 1; drawMenu(); clearInterval(game)}
+  if(event.keyCode == 27 && menu_pressed==0 && flag==0) {menu_pressed = 1; createMenu();clearInterval(game)}
   else if (event.keyCode == 27 && menu_pressed == 1) {
-    //alert('test')
-    menu_pressed = 2; game = setInterval(drawGame,100)}
+    menu_pressed = 0; if (j==0) {game = setInterval(drawGame,100); btn1.style.display = 'none';menu.style.display = 'none'}}
 }
-// let randCordGhost1={
-// x:0,
-// y:0
-// }
-// function genRandCord(){
-// randCordGhost1.x = Math.floor(Math.random() * 11) * box
-// randCordGhost1.y = Math.floor(Math.random() * 10) * box
-//}
+
 
 function genRandSide(){
-  return randSideGhost1 = Math.floor(Math.random()* 20 + 1)
+  return randSideGhost1 = Math.floor(Math.random()* 50 + 1)
 }
 
-function drawMenu(){
-  ctx.fillRect(7+2*box,7+2*box,3*box,3*box)
-}
 
 //Массив с координатами частиц
   let arr = [
@@ -125,23 +182,6 @@ function drawMenu(){
     [-100,-100],[-100,-100],[-100,-100],[-100,-100],[4,9],[5,9],[6,9],[7,9],[-100,-100],[-100,-100],[-100,-100],[-100,-100],
     [0,10],[1,10],[2,10],                         [3,10],[4,10],[5,10],[6,10],         [7,10],[8,10],[9,10],[10,10],[11,10],
   ]
-
-
-/*for (i = 0;i<=11;i++){
-  for (j=0;j<=10;j++){
-    arr1 = [18+i*box,19+j*box]
-    arr.push(arr1)
-  }
-}
-
-  for (i = 0;i<arr.length;i++){
-    if (arr[i][0]==0 && arr[i][1]==2 || arr[i][0]==0 && arr[i][1]==2) arr.spline(i,1)
-
-  } 
-for (i = 0;i<arr.length;i++){
-  console.log(arr[i])
-}*/
-
 
 
 //Массив со сдвигами от начала координат и шириной/длиной стенок 
@@ -167,8 +207,9 @@ function drawWalls(){
 var count = 0
 let countParticles = 0
 //Отрисовка игры
+console.log(level)
   function drawGame() {
-   
+   console.log(level)
   ctx.drawImage(ground,0,0);
   ctx.fillStyle="#1E90FF"
 
@@ -187,7 +228,7 @@ let countParticles = 0
   
   
   count +=1
-  // console.log(count)
+ 
 
   //Реализация движения 1 призрака
   let side = genRandSide()
@@ -195,12 +236,44 @@ let countParticles = 0
 
   if (count ==5 || count ==10 || count ==15 || count ==30) ghost1.x -= box
   if (count ==20 || count ==25) ghost1.y -= box
-  if (count > 60) {
-    if (side == 1) {sideStr = "right"; ghost1.x += box}
-    if (side == 2) {sideStr = "up"; ghost1.y -= box}
-    if (side == 3) {sideStr = "left"; ghost1.x -= box}
-    if (side == 4) {sideStr = "down";ghost1.y += box}
-  }
+  if (count==60 + 160*qj)  ghost1.x -=box
+  if (count==65 + 160*qj)  ghost1.y -=box
+  if (count==70 + 160*qj)  ghost1.x +=box
+  if (count==75 + 160*qj)  ghost1.x +=box
+  if (count==80 + 160*qj)  ghost1.y +=box
+  if (count==85 + 160*qj)  ghost1.y +=box
+  if (count==90 + 160*qj)  ghost1.y +=box
+  if (count==95 + 160*qj)  ghost1.x +=box
+  if (count==100 + 160*qj) ghost1.x +=box
+  if (count==105 + 160*qj) ghost1.y -=box
+  if (count==110 + 160*qj) ghost1.y -=box
+  if (count==115 + 160*qj) ghost1.y -=box
+  if (count==120 + 160*qj) ghost1.x +=box
+  if (count==125 + 160*qj) ghost1.y +=box 
+  if (count==130 + 160*qj) ghost1.y +=box 
+  if (count==135 + 160*qj) ghost1.x -=box 
+  if (count==140 + 160*qj) ghost1.y +=box  
+  if (count==145 + 160*qj) ghost1.y +=box  
+  if (count==150 + 160*qj) ghost1.x -=box 
+  if (count==155 + 160*qj) ghost1.x -=box  
+  if (count==160 + 160*qj) ghost1.x -=box 
+  if (count==165 + 160*qj) ghost1.x -=box
+  if (count==170 + 160*qj) ghost1.y -=box
+  if (count==175 + 160*qj) ghost1.x +=box
+  if (count==180 + 160*qj) ghost1.x +=box
+  if (count==185 + 160*qj) ghost1.y -=box
+  if (count==190 + 160*qj) ghost1.y -=box
+  if (count==195 + 160*qj) ghost1.y -=box
+  if (count==200 + 160*qj) ghost1.x -=box
+  if (count==205 + 160*qj) ghost1.x -=box
+  if (count==210 + 160*qj) ghost1.y +=box 
+  if (count==215 + 160*qj) ghost1.x +=box
+  // if (count > 60) {
+  //   if (side == 1) {sideStr = "right"; ghost1.x += box}
+  //   if (side == 2) {sideStr = "up"; ghost1.y -= box}
+  //   if (side == 3) {sideStr = "left"; ghost1.x -= box}
+  //   if (side == 4) {sideStr = "down";ghost1.y += box}
+  // }
 
 //Реализация движения 2 призрака
   let side1 = genRandSide()
@@ -208,12 +281,45 @@ let countParticles = 0
 
   if (count ==5 || count ==10 || count ==15 || count ==30) ghost2.x += box
   if (count ==20 || count ==25) ghost2.y -= box
-  if (count > 60) {
-    if (side1 == 1) {sideStr1 = "right"; ghost2.x += box}
-    if (side1 == 2) {sideStr1 = "up"; ghost2.y -= box}
-    if (side1 == 3) {sideStr1 = "left"; ghost2.x -= box}
-    if (side1 == 4) {sideStr1 = "down";ghost2.y += box}
-  }
+  if (count==60 + 160*qj)  ghost2.x +=box
+  if (count==65 + 160*qj)  ghost2.y -=box
+  if (count==70 + 160*qj)  ghost2.x -=box
+  if (count==75 + 160*qj)  ghost2.x -=box
+  if (count==80 + 160*qj)  ghost2.y +=box
+  if (count==85 + 160*qj)  ghost2.y +=box
+  if (count==90 + 160*qj)  ghost2.y +=box
+  if (count==95 + 160*qj)  ghost2.x -=box
+  if (count==100 + 160*qj) ghost2.x -=box
+  if (count==105 + 160*qj) ghost2.y -=box
+  if (count==110 + 160*qj) ghost2.y -=box
+  if (count==115 + 160*qj) ghost2.y -=box
+  if (count==120 + 160*qj) ghost2.x -=box
+  if (count==125 + 160*qj) ghost2.y +=box 
+  if (count==130 + 160*qj) ghost2.y +=box 
+  if (count==135 + 160*qj) ghost2.x +=box 
+  if (count==140 + 160*qj) ghost2.y +=box  
+  if (count==145 + 160*qj) ghost2.y +=box  
+  if (count==150 + 160*qj) ghost2.x +=box 
+  if (count==155 + 160*qj) ghost2.x +=box  
+  if (count==160 + 160*qj) ghost2.x +=box 
+  if (count==165 + 160*qj) ghost2.x +=box
+  if (count==170 + 160*qj) ghost2.y -=box
+  if (count==175 + 160*qj) ghost2.x -=box
+  if (count==180 + 160*qj) ghost2.x -=box
+  if (count==185 + 160*qj) ghost2.y -=box
+  if (count==190 + 160*qj) ghost2.y -=box
+  if (count==195 + 160*qj) ghost2.y -=box
+  if (count==200 + 160*qj) ghost2.x +=box
+  if (count==205 + 160*qj) ghost2.x +=box
+  if (count==210 + 160*qj) ghost2.y +=box 
+  if (count==215 + 160*qj) {ghost2.x -=box; qj+=1}
+  
+  // if (count > 60) {
+  //   if (side1 == 1) {sideStr1 = "right"; ghost2.x += box}
+  //   if (side1 == 2) {sideStr1 = "up"; ghost2.y -= box}
+  //   if (side1 == 3) {sideStr1 = "left"; ghost2.x -= box}
+  //   if (side1 == 4) {sideStr1 = "down";ghost2.y += box}
+  // }
 
   //Реализация движения 3 призрака
   let side2 = genRandSide()
@@ -222,35 +328,84 @@ let countParticles = 0
   if (count == 5 || count == 15 || count == 20 || count == 25) ghost3.y += box
   if (count == 10 || count == 30 || count == 35 || count == 40) ghost3.x -= box
   if (count == 45) ghost3.y -= box
-  if (count > 60) {
-    if (side2 == 1) {sideStr2 = "right"; ghost3.x += box}
-    if (side2 == 2) {sideStr2 = "up"; ghost3.y -= box}
-    if (side2 == 3) {sideStr2 = "left"; ghost3.x -= box}
-    if (side2 == 4) {sideStr2 = "down";ghost3.y += box}
-  }
+  if (count==60 + 120*ij)  ghost3.x +=box
+  if (count==65 + 120*ij)  ghost3.y -=box
+  if (count==70 + 120*ij)  ghost3.x -=box
+  if (count==75 + 120*ij)  ghost3.x -=box
+  if (count==80 + 120*ij)  ghost3.y +=box
+  if (count==85 + 120*ij)  ghost3.y +=box
+  if (count==90 + 120*ij)  ghost3.x +=box
+  if (count==95 + 120*ij)  ghost3.x +=box
+  if (count==100 + 120*ij) ghost3.x +=box  
+  if (count==105 + 120*ij) ghost3.x +=box
+  if (count==110 + 120*ij)  ghost3.y -=box
+  if (count==115 + 120*ij)  ghost3.y -=box
+  if (count==120 + 120*ij)  ghost3.y -=box
+  if (count==125 + 120*ij)  ghost3.x +=box
+  if (count==130 + 120*ij)  ghost3.y +=box
+  if (count==135 + 120*ij)  ghost3.y +=box
+  if (count==140 + 120*ij)  ghost3.y +=box
+  if (count==145 + 120*ij)  ghost3.y +=box
+  if (count==150 + 120*ij)  ghost3.x -=box
+  if (count==155 + 120*ij)  ghost3.y -=box
+  if (count==160 + 120*ij)  ghost3.x -=box
+  if (count==165 + 120*ij)  ghost3.x -=box
+  if (count==170 + 120*ij)  ghost3.x -=box
+  if (count==175 + 120*ij)  ghost3.y -=box
+  // if (count > 60) {
+  //   if (side2 == 1) {sideStr2 = "right"; ghost3.x += box}
+  //   if (side2 == 2) {sideStr2 = "up"; ghost3.y -= box}
+  //   if (side2 == 3) {sideStr2 = "left"; ghost3.x -= box}
+  //   if (side2 == 4) {sideStr2 = "down";ghost3.y += box}
+  // }
 
   //Реализация движения 4 призрака
   let side3 = genRandSide()
   let sideStr3 = " "
 
+  
   if (count == 5 || count == 15 || count == 20 || count == 25) ghost4.y += box
   if (count == 10 || count == 30 || count == 35 || count == 40) ghost4.x += box
   if (count == 45) ghost4.y -= box
-  if (count > 60) {
-    if (side3 == 1) {sideStr3 = "right"; ghost4.x += box}
-    if (side3 == 2) {sideStr3 = "up"; ghost4.y -= box}
-    if (side3 == 3) {sideStr3 = "left"; ghost4.x -= box}
-    if (side3 == 4) {sideStr3 = "down";ghost4.y += box}
-  }
+  if (count==60 + 120*ij)  ghost4.x -=box
+  if (count==65 + 120*ij)  ghost4.y -=box
+  if (count==70 + 120*ij)  ghost4.x +=box
+  if (count==75 + 120*ij)  ghost4.x +=box
+  if (count==80 + 120*ij)  ghost4.y +=box
+  if (count==85 + 120*ij)  ghost4.y +=box
+  if (count==90 + 120*ij)  ghost4.x -=box
+  if (count==95 + 120*ij)  ghost4.x -=box
+  if (count==100 + 120*ij) ghost4.x -=box
+  if (count==105 + 120*ij) ghost4.x -=box
+  if (count==110 + 120*ij)  ghost4.y -=box
+  if (count==115 + 120*ij)  ghost4.y -=box
+  if (count==120 + 120*ij)  ghost4.y -=box
+  if (count==125 + 120*ij)  ghost4.x -=box
+  if (count==130 + 120*ij)  ghost4.y +=box
+  if (count==135 + 120*ij)  ghost4.y +=box
+  if (count==140 + 120*ij)  ghost4.y +=box
+  if (count==145 + 120*ij)  ghost4.y +=box
+  if (count==150 + 120*ij)  ghost4.x +=box
+  if (count==155 + 120*ij)  ghost4.y -=box
+  if (count==160 + 120*ij)  ghost4.x +=box
+  if (count==165 + 120*ij)  ghost4.x +=box
+  if (count==170 + 120*ij)  ghost4.x +=box
+  if (count==175 + 120*ij) {ghost4.y -=box; ij+=1}
+  // if (count > 60) {
+  //   if (side3 == 1) {sideStr3 = "right"; ghost4.x += box}
+  //   if (side3 == 2) {sideStr3 = "up"; ghost4.y -= box}
+  //   if (side3 == 3) {sideStr3 = "left"; ghost4.x -= box}
+  //   if (side3 == 4) {sideStr3 = "down";ghost4.y += box}
+  // }
 
 
-  if (countParticles==98) {alert('Вы победили!'); clearInterval(game)}
+  if (countParticles==98) {alert('Вы победили!'); clearInterval(game);j=1; createMenu();}
 //Реализация движения пакмана
 
 
 
 
-console.log("Призрак",Math.floor(ghost1.x/44),Math.floor(ghost1.y/44))
+// console.log("Призрак",Math.floor(ghost1.x/44),Math.floor(ghost1.y/44))
 
   if (count > 45){
     if (dir == "left") packman.x -= box;
@@ -263,11 +418,8 @@ console.log("Призрак",Math.floor(ghost1.x/44),Math.floor(ghost1.y/44))
   for (i = 0;i<arr.length;i++){
     if (Math.floor(arr[i][0]) == Math.floor(packman.x/44)  && Math.floor(arr[i][1]) == Math.floor(packman.y/44))  {arr.splice(i,1); countParticles+=1}
   }
-  // console.log(countParticles)
-  // for (i = 0;i<arr.length;i++){
-  //   console.log(arr.length)
-  // }
-  
+
+
 //Условие для нижней левой стенки
   if (packman.x < 4 * box && packman.y < 10 * box && packman.y > 9 * box) {
     if (dir == "left") packman.x = 7 + 4 * box;
@@ -727,14 +879,17 @@ ghosts.forEach(ghost => {
   ctx.drawImage(ghostImg, ghost.x, ghost.y);
 });
 ctx.drawImage(packamImg, packman.x, packman.y);
-if (Math.floor((packman.x/44))==Math.floor(ghost1.x/44) && Math.floor(packman.y/44)==((ghost1.y - 7)/44))   clearInterval(game)
-if (Math.floor(packman.x/44)==Math.floor(ghost2.x/44) && Math.floor(packman.y/44)==Math.floor(ghost2.y/44)) clearInterval(game)
-if (Math.floor(packman.x/44)==Math.floor(ghost3.x/44) && Math.floor(packman.y/44)==Math.floor(ghost3.y/44)) clearInterval(game)
-if (Math.floor(packman.x/44)==Math.floor(ghost4.x/44) && Math.floor(packman.y/44)==Math.floor(ghost4.y/44)) clearInterval(game)
-console.log(Math.floor(packman.x/44),Math.floor(packman.y/44))
 
-  }
-let game = setInterval(drawGame, 100);
+
+if (Math.floor((packman.x/44))==Math.floor(ghost1.x/44) && Math.floor(packman.y/44)==((ghost1.y - 7)/44))   {clearInterval(game); j = 1;createMenu();}
+if (Math.floor(packman.x/44)==Math.floor(ghost2.x/44) && Math.floor(packman.y/44)==Math.floor(ghost2.y/44)) {clearInterval(game); j = 1;createMenu();}
+if (Math.floor(packman.x/44)==Math.floor(ghost3.x/44) && Math.floor(packman.y/44)==Math.floor(ghost3.y/44)) {clearInterval(game); j = 1;createMenu();}
+if (Math.floor(packman.x/44)==Math.floor(ghost4.x/44) && Math.floor(packman.y/44)==Math.floor(ghost4.y/44)) {clearInterval(game); j = 1;createMenu();}
+// console.log(Math.floor(packman.x/44),Math.floor(packman.y/44))
+
+}
+
+game = setInterval(drawGame,interval)
 
 
 
