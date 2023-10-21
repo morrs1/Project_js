@@ -92,3 +92,22 @@ button:active {
     margin-top: 10%;
   }
   
+
+  .textScore{
+    
+    display: flex;
+    justify-content: center;
+    color:grey;
+  }
+
+  .textScore>p{
+    padding:1%;
+    border: solid;
+    border-color: gray;
+  }
+  
+  .textScoreInPause{
+    position: absolute;
+    top:40%;
+    left:39%;
+  }

@@ -31,8 +31,9 @@
         document.write(buff);
         document.write("</table>");
     </script> -->
-    <div id="menu1"class="menu">
-    <button id="btn1" onclick="location.reload()">Restart</button>
+    <div id="menu1"class="menu"> 
+    <div><button id="btn1" onclick="location.reload()">Restart</button></div>
+    <div><p id="textScoreInPause" class="textScoreInPause"></p></div>
     </div>
     <div>
     <button id="btnMenu" class = "btnMenu"></button>
@@ -51,8 +52,9 @@
             <button id="btnMainMenu4" class="btnMainMenu" ><p>Records</p></button>
         </div>
     </div>
-    <canvas id="myCanvas" width="530" height="487" display="block"></canvas>
     
+    <canvas id="myCanvas" width="530" height="487" display="block"></canvas>
+    <div class="textScore"><p id="textScore"></p></div>
 
 <script src="project.js"></script>
 
