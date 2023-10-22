@@ -32,8 +32,8 @@
         document.write("</table>");
     </script> -->
     <div id="menu1"class="menu"> 
-    <div><button id="btn1" onclick="location.reload()">Restart</button></div>
-    <div><p id="textScoreInPause" class="textScoreInPause"></p></div>
+    <div style="display: flex; justify-content: center;"><button id="btn1" onclick="location.reload()">Restart</button></div>
+    <div style="display: flex; justify-content: center;"><p id="textScoreInPause" class="textScoreInPause"></p></div>
     </div>
     <div>
     <button id="btnMenu" class = "btnMenu"></button>
@@ -53,10 +53,14 @@
         </div>
     </div>
     
+    <div id="tableRecords" class="tableRecords">
+        <button id= 'btnCloseRecords'></button>
+    </div>
+
     <canvas id="myCanvas" width="530" height="487" display="block"></canvas>
     <div class="textScore"><p id="textScore"></p></div>
 
 <script src="project.js"></script>
-
+<script src="pp.js"></script>
 </body>
 </html>

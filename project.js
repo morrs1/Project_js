@@ -20,6 +20,101 @@ var ctx = canvas.getContext("2d");
  
 // // Рисуем линии на canvas
 // ctx.stroke();
+
+
+//////////////////////////////////////////////////////
+// Создаем объект для хранения рекордов
+let records = {
+  // Массив для хранения имени и очков игрока
+  players: [],
+  // Метод для добавления нового рекорда
+  addRecord: function(name, score) {
+    // Добавляем новый элемент в массив
+    this.players.push({name: name, score: score});
+    // Сортируем массив по убыванию очков
+    this.players.sort(function(a, b) {
+      return b.score - a.score;
+    });
+    // Обрезаем массив до 10 элементов
+    // this.players = this.players.slice(0, 10);
+    // Сохраняем массив в localStorage
+    localStorage.setItem("records", JSON.stringify(this.players));
+  },
+  // Метод для получения рекордов из localStorage
+  getRecords: function() {
+    // Проверяем, есть ли данные в localStorage
+    if (localStorage.getItem("records")) {
+      // Преобразуем строку в массив
+      this.players = JSON.parse(localStorage.getItem("records"));
+    }
+  },
+ 
+}
+
+records.addRecord('aa',10)
+records.addRecord('ff',1)
+records.addRecord('ff',2)
+records.addRecord('ff',3)
+records.addRecord('ff',4)
+records.addRecord('ff',5)
+records.addRecord('ff',6)
+records.addRecord('ff',7)
+records.addRecord('ff',8)
+records.addRecord('ff',9)
+records.getRecords()
+let arr1 = records.players.sort();
+
+
+const tableRecords = document.getElementById('tableRecords')
+const btnCloseRecords = document.getElementById('btnCloseRecords')
+
+
+
+
+console.log(records.players)
+for (i =0;i<arr1.length;i++){
+let d = document.createElement('div')
+let p1 = document.createElement('p')
+let p2 = document.createElement('p')
+d.style.display = 'flex'
+tableRecords.appendChild(d)
+p1.textContent = 'Name: ' + String(arr1[i].name)
+p2.textContent =  "Score: " + String(arr1[i].score)
+
+d.style.justifyContent = 'space-around'
+d.style.border = "solid"
+d.style.margin = '2%'
+d.style.borderColor = "gray"
+d.style.borderRadius = '5px'
+p1.style.marginTop = "2%"
+p2.style.marginTop = "2%"
+p1.style.marginBottom = "2%"
+p2.style.marginBottom = "2%"
+d.appendChild(p1)
+d.appendChild(p2)
+
+}
+
+const btnRecords = document.getElementById('btnMainMenu4')
+
+btnRecords.onclick = function(){
+mainMenu.style.display = 'none'
+flag = 0
+tableRecords.style.display='block'
+clearInterval(game)
+}
+
+btnCloseRecords.onclick = function(){
+tableRecords.style.display = 'none'
+game = setInterval(drawGame,interval)
+}
+
+console.log(arr1[9].score,arr1[9].name)
+if (endGame ==1 && countParticles>arr1[9].score){
+records.addRecord('hh',countParticles)
+}
+
+/////////////////////////////////////////////
 let box = 44;
 const ground = new Image();
 ground.src = "img_pole5.jpg";
@@ -59,9 +154,10 @@ let interval = 100
 
 btnMainMenu1.onclick = function(){
   level = 1;
+  interval = 150
   countParticles = 0
   clearInterval(game)
-  game = setInterval(drawGame,150)
+  game = setInterval(drawGame,interval)
   count = 0
   mainMenu.style.display='none'
   flag = 0
@@ -96,7 +192,8 @@ btnMainMenu2.onclick = function(){
   level = 2;
   countParticles = 0
   clearInterval(game)
-  game = setInterval(drawGame,125)
+  interval = 125
+  game = setInterval(drawGame,interval)
   count = 0
   mainMenu.style.display='none'
   flag = 0
@@ -131,7 +228,8 @@ btnMainMenu3.onclick = function(){
   level = 3;
   countParticles = 0
   clearInterval(game)
-  game = setInterval(drawGame,100)
+  interval = 100
+  game = setInterval(drawGame,interval)
   count = 0
   mainMenu.style.display='none'
   flag = 0
@@ -184,7 +282,6 @@ function ghostMovement(){
   if (level == 1){
     let side = genRandSide()
     let sideStr = " "
-  console.log(count)
     if (count ==5 || count ==10 || count ==15 || count ==30) ghost1.x -= box
     if (count ==20 || count ==25) ghost1.y -= box
     if (count==60 + 160*qj)  ghost1.x -=box
@@ -1247,7 +1344,7 @@ document.addEventListener("keydown",direction);
 
 let dir;
 let menu_pressed = 0;
-var j = 0;
+var endGame = 0;
 function direction(event) {
   if(event.keyCode == 37 || event.keyCode ==65)
     dir = "left"
@@ -1259,7 +1356,7 @@ function direction(event) {
     dir = "down"
   if(event.keyCode == 27 && menu_pressed==0 && flag==0) {menu_pressed = 1; createMenu();clearInterval(game)}
   else if (event.keyCode == 27 && menu_pressed == 1) {
-    menu_pressed = 0; if (j==0) {game = setInterval(drawGame,100); btn1.style.display = 'none';menu.style.display = 'none'}}
+    menu_pressed = 0; if (endGame==0) {game = setInterval(drawGame,interval); btn1.style.display = 'none';menu.style.display = 'none'}}
 }
 
 
@@ -1307,9 +1404,8 @@ function drawWalls(){
 var count = 0
 let countParticles = 0
 //Отрисовка игры
-console.log(level)
+
   function drawGame() {
-   console.log(level)
   ctx.drawImage(ground,0,0);
   ctx.fillStyle="#1E90FF"
 
@@ -1331,7 +1427,7 @@ console.log(level)
  
   ghostMovement()
 
-  if (countParticles==97) {alert('Вы победили!'); clearInterval(game);j=1; createMenu();}
+  if (countParticles==97) {alert('Вы победили!'); clearInterval(game);endGame=1; createMenu();}
 //Реализация движения пакмана
 
 
@@ -1446,13 +1542,16 @@ ghosts.forEach(ghost => {
 ctx.drawImage(packamImg, packman.x, packman.y);
 
 
-if (Math.floor((packman.x/44))==Math.floor(ghost1.x/44) && Math.floor(packman.y/44)==((ghost1.y - 7)/44))   {clearInterval(game); j = 1;createMenu();}
-if (Math.floor(packman.x/44)==Math.floor(ghost2.x/44) && Math.floor(packman.y/44)==Math.floor(ghost2.y/44)) {clearInterval(game); j = 1;createMenu();}
-if (Math.floor(packman.x/44)==Math.floor(ghost3.x/44) && Math.floor(packman.y/44)==Math.floor(ghost3.y/44)) {clearInterval(game); j = 1;createMenu();}
-if (Math.floor(packman.x/44)==Math.floor(ghost4.x/44) && Math.floor(packman.y/44)==Math.floor(ghost4.y/44)) {clearInterval(game); j = 1;createMenu();}
+if (Math.floor((packman.x/44))==Math.floor(ghost1.x/44) && Math.floor(packman.y/44)==((ghost1.y - 7)/44))   {clearInterval(game); endGame = 1;createMenu();}
+if (Math.floor(packman.x/44)==Math.floor(ghost2.x/44) && Math.floor(packman.y/44)==Math.floor(ghost2.y/44)) {clearInterval(game); endGame = 1;createMenu();}
+if (Math.floor(packman.x/44)==Math.floor(ghost3.x/44) && Math.floor(packman.y/44)==Math.floor(ghost3.y/44)) {clearInterval(game); endGame = 1;createMenu();}
+if (Math.floor(packman.x/44)==Math.floor(ghost4.x/44) && Math.floor(packman.y/44)==Math.floor(ghost4.y/44)) {clearInterval(game); endGame = 1;createMenu();}
 // console.log(Math.floor(packman.x/44),Math.floor(packman.y/44))
-
+if (endGame ==1 && countParticles>arr1[9].score){
+  records.addRecord('hhhh',countParticles)
 }
+}
+
 
 game = setInterval(drawGame,interval)
 
