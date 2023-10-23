@@ -48,21 +48,21 @@ let records = {
       this.players = JSON.parse(localStorage.getItem("records"));
     }
   },
- 
+  
 }
 
-records.addRecord('aa',10)
-records.addRecord('ff',1)
-records.addRecord('ff',2)
-records.addRecord('ff',3)
-records.addRecord('ff',4)
-records.addRecord('ff',5)
-records.addRecord('ff',6)
-records.addRecord('ff',7)
-records.addRecord('ff',8)
-records.addRecord('ff',9)
+// records.addRecord('aa',10)
+// records.addRecord('ff',1)
+// records.addRecord('ff',2)
+// records.addRecord('ff',3)
+// records.addRecord('ff',4)
+// records.addRecord('ff',5)
+// records.addRecord('ff',6)
+// records.addRecord('ff',7)
+// records.addRecord('ff',8)
+// records.addRecord('ff',9)
 records.getRecords()
-let arr1 = records.players.sort();
+let arr1 = records.players.sort().slice(0,10);
 
 
 const tableRecords = document.getElementById('tableRecords')
@@ -109,11 +109,28 @@ tableRecords.style.display = 'none'
 game = setInterval(drawGame,interval)
 }
 
-console.log(arr1[9].score,arr1[9].name)
-if (endGame ==1 && countParticles>arr1[9].score){
-records.addRecord('hh',countParticles)
-}
 
+
+// records.addRecord('hhhh',100)
+let flagE = 0
+const endMenu = document.getElementById('endMenu')
+const input = document.querySelector('input')
+const exitBtn = document.getElementById('exitBtn')
+let textName = ""
+exitBtn.onclick = function(){
+  textName = input.value
+  flagE = 1
+  if (endGame ==1 && arr1.length<10 && flagE ==1){
+  
+    records.addRecord('textName',countParticles*10)
+    console.log('fdfdfdfdfdfsf')
+  }
+  else if(endGame == 1 && arr1[9].score<countParticles*10 && flagE ==1){
+    
+    records.addRecord(String(textName),countParticles*10)
+  }
+  
+}
 /////////////////////////////////////////////
 let box = 44;
 const ground = new Image();
@@ -1338,6 +1355,7 @@ btn1.style.display = 'block'
 menu.style.display = 'block'
 textScoreInPause.textContent= 'Score: '+String(countParticles * 10);
 }
+const textScoreInPause1 = document.getElementById('textScoreInPause1')
 
 
 document.addEventListener("keydown",direction);
@@ -1427,7 +1445,7 @@ let countParticles = 0
  
   ghostMovement()
 
-  if (countParticles==97) {alert('Вы победили!'); clearInterval(game);endGame=1; createMenu();}
+  if (countParticles==97) {alert('Вы победили!'); clearInterval(game);endGame=1; endMenu.style.display='block';}
 //Реализация движения пакмана
 
 
@@ -1542,17 +1560,16 @@ ghosts.forEach(ghost => {
 ctx.drawImage(packamImg, packman.x, packman.y);
 
 
-if (Math.floor((packman.x/44))==Math.floor(ghost1.x/44) && Math.floor(packman.y/44)==((ghost1.y - 7)/44))   {clearInterval(game); endGame = 1;createMenu();}
-if (Math.floor(packman.x/44)==Math.floor(ghost2.x/44) && Math.floor(packman.y/44)==Math.floor(ghost2.y/44)) {clearInterval(game); endGame = 1;createMenu();}
-if (Math.floor(packman.x/44)==Math.floor(ghost3.x/44) && Math.floor(packman.y/44)==Math.floor(ghost3.y/44)) {clearInterval(game); endGame = 1;createMenu();}
-if (Math.floor(packman.x/44)==Math.floor(ghost4.x/44) && Math.floor(packman.y/44)==Math.floor(ghost4.y/44)) {clearInterval(game); endGame = 1;createMenu();}
+if (Math.floor((packman.x/44))==Math.floor(ghost1.x/44) && Math.floor(packman.y/44)==((ghost1.y - 7)/44))   {clearInterval(game); endGame = 1;endMenu.style.display='block'}
+if (Math.floor(packman.x/44)==Math.floor(ghost2.x/44) && Math.floor(packman.y/44)==Math.floor(ghost2.y/44)) {clearInterval(game); endGame = 1;endMenu.style.display='block'}
+if (Math.floor(packman.x/44)==Math.floor(ghost3.x/44) && Math.floor(packman.y/44)==Math.floor(ghost3.y/44)) {clearInterval(game); endGame = 1;endMenu.style.display='block'}
+if (Math.floor(packman.x/44)==Math.floor(ghost4.x/44) && Math.floor(packman.y/44)==Math.floor(ghost4.y/44)) {clearInterval(game); endGame = 1;endMenu.style.display='block'}
 // console.log(Math.floor(packman.x/44),Math.floor(packman.y/44))
-if (endGame ==1 && countParticles>arr1[9].score){
-  records.addRecord('hhhh',countParticles)
-}
+
+textScoreInPause1.textContent= 'Score: '+String(countParticles * 10);
 }
 
-
+console.log(input.value)
 game = setInterval(drawGame,interval)
 
 
