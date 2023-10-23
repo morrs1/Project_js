@@ -1527,13 +1527,13 @@ let countParticles = 0
     if (dir =="right") packman.x = 7 + 9*box;
   }
 //Условие для вертикальной стенки сверху слева
-  if (packman.x >7+2*box && packman.x<7+4*box && packman.y<7+3*box) {
+  if (packman.x >10+2*box && packman.x<7+4*box && packman.y<7+3*box) {
     if (dir == "right") packman.x = 7 + 2*box;
     if (dir == "left") packman.x = 7 + 4*box;
     if (dir == "up") packman.y = 7 + 3*box;
   }
 //Условие для вертикальной стенки сверху справа
-  if (packman.x >7+7*box && packman.x<7+9*box && packman.y<7+3*box) {
+  if (packman.x >10+7*box && packman.x<7+9*box && packman.y<7+3*box) {
     if (dir == "up") packman.y = 7 + 3*box;
     if (dir == "left") packman.x = 7 + 9*box;
     if (dir == "right") packman.x = 7 + 7*box;
